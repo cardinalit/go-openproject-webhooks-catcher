@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+   "net/http"
+
+   bot "go-openproject-webhooks-bot/openproject-webhooks-bot"
+)
 
 func main() {
-	fmt.Printf("Hello world!")
+   http.HandleFunc("/openproject", bot.ServeHTTP)
+
+   err := http.ListenAndServe(":80", nil)
+   if err != nil {
+      return
+   }
 }
