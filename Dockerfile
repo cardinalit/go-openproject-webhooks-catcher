@@ -1,7 +1,7 @@
 ##
 # BUILDER
 ##
-FROM golang:1.17.6-alpine as BUILDER
+FROM golang:1.17.6-alpine
 
 WORKDIR /srv/app
 
@@ -11,16 +11,20 @@ RUN CGO_ENABLED=0 GOOS=linux \
 	go build -a -installsuffix \
 	cgo -ldflags '-extldflags "-static"' -o op-hookscatcher-bot .
 
-##
-# Main image
-##
-FROM scratch
-
-WORKDIR /srv/app
-
-COPY --from=BUILDER /srv/app/op-hookscatcher-bot .
-COPY openproject-webhooks-bot/templates .
-
 EXPOSE 80
 
 CMD ["/srv/app/op-hookscatcher-bot"]
+
+##
+# Main image
+##
+#FROM scratch
+#
+#WORKDIR /srv/app
+#
+#COPY --from=BUILDER /srv/app/op-hookscatcher-bot .
+#COPY openproject-webhooks-bot/templates .
+#
+#EXPOSE 80
+#
+#CMD ["/srv/app/op-hookscatcher-bot"]
