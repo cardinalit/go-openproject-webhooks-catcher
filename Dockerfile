@@ -15,6 +15,7 @@ EXPOSE 80
 
 CMD ["/srv/app/op-hookscatcher-bot"]
 
+# TODO: сделать образ максимально легковесным
 ##
 # Main image
 ##
