@@ -22,11 +22,11 @@ include:
 - template: Security/SAST-IaC.latest.gitlab-ci.yml
 - template: Security/Secret-Detection.gitlab-ci.yml
 
- docker:build:
-   stage: dockerize
-   image: docker:stable
-   before_script:
-     - docker login -u ${CI_REGISTRY_USER} -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
-   script:
-     - docker build --pull -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}" .
-     - docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}"
+docker:build:
+  stage: dockerize
+  image: docker:stable
+  before_script:
+    - docker login -u ${CI_REGISTRY_USER} -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
+  script:
+    - docker build --pull -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}" .
+    - docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}"
