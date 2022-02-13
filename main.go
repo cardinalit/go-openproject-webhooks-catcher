@@ -7,7 +7,9 @@ import (
 )
 
 func main() {
-   http.HandleFunc("/openproject", bot.ServeHTTP)
+   http.HandleFunc("/wp/created", bot.ServeHTTP)
+   // TODO: Сделать нотификацию на обновление задачи
+   // http.HandleFunc("/wp/updated", bot.ServeHTTP)
 
    err := http.ListenAndServe(":80", nil)
    if err != nil {

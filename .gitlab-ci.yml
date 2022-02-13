@@ -1,3 +1,4 @@
+---
 # You can override the included template(s) by including variable overrides
 # SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
 # Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
@@ -5,13 +6,28 @@
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 default:
+  services:
+    - docker:dind
   tags:
-  - devspark-runner
+    - devspark-runner
+
 stages:
-- test
+  - security
+  - dockerize
+
 sast:
-  stage: test
+  stage: security
+
 include:
-- template: Security/SAST.gitlab-ci.yml
-- template: Security/SAST-IaC.latest.gitlab-ci.yml
-- template: Security/Secret-Detection.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/SAST-IaC.latest.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+
+ docker:build:
+   stage: dockerize
+   image: docker:stable
+   before_script:
+     - docker login -u ${CI_REGISTRY_USER} -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
+   script:
+     - docker build --pull -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}" .
+     - docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}"

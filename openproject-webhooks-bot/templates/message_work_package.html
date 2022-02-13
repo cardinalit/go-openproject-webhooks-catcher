@@ -1,0 +1,7 @@
+<b>Новый таск:</b> #{{ .WorkPackage.ID }} {{ .WorkPackage.Subject }}
+<b>Источник:</b> {{ .WorkPackage.Embedded.Author.FirstName }} {{ .WorkPackage.Embedded.Author.LastName }} ({{ .WorkPackage.Embedded.Author.Login }})
+⠀
+🔗 <a href="https://tracker.devspark.ru/projects/{{ .WorkPackage.Embedded.Project.Identifier }}/work_packages/{{ .WorkPackage.ID }}/activity">Открыть таск</a>
+⠀
+---
+#tracker{{ .WorkPackage.ID }}
