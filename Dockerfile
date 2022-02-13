@@ -19,6 +19,7 @@ FROM scratch
 WORKDIR /srv/app
 
 COPY --from=BUILDER /srv/app/op-hookscatcher-bot .
+COPY openproject-webhooks-bot/templates .
 
 EXPOSE 80
 
