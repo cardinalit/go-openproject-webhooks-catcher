@@ -7,13 +7,13 @@
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 default:
   services:
-    - docker:dind
+  - docker:dind
   tags:
-    - devspark-runner
+  - devspark-runner
 
 stages:
-  - security
-  - dockerize
+- security
+- dockerize
 
 sast:
   stage: security
